@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
     let message = err.message;
     if (err.name === 'CastError' && err.kind === 'ObjectId') {
         //statusCode = 404;
-        message = 'Resource not found';
+        message = 'Resourcez not found';
     }
 
     res.status(statusCode)
