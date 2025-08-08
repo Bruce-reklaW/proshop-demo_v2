@@ -1,21 +1,17 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+//import { useEffect, useState } from "react"
+//import axios from "axios"
 import { Row,Col } from "react-bootstrap"  
 import Product from "../components/product"
-//import products from "../products"
+import {useGetProductsQuery} from '../slices/productsApiSlice.js';   
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([])
+  const {data: products, isLoading, error} = useGetProductsQuery();
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const {data} = await axios.get('/api/products')
-      setProducts(data)
-    }
-    fetchProducts()
-  }, []);
   return (
     <>
+        { isLoading ? (
+          <h2>Loading...</h2>
+        ) : error ? (<div>{error?.data?.message || error?.message}</div>) : (<>
         <h1>Latest Products</h1>
         <Row className="align-items-center">
         {products.map((product) => (
@@ -24,8 +20,11 @@ const HomeScreen = () => {
           </Col>
         ))}
         </Row>
+        </>) }
+
+        
     </>
-  )
-}
+  )//return
+}//HomeScreen
 
 export default HomeScreen
